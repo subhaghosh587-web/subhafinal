@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Submission Insights</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-full bg-slate-900 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+    <div class="min-h-full flex flex-col">
+        
+        <!-- Top Navigation Bar -->
+        <header class="bg-slate-800/80 backdrop-blur-md border-b border-slate-700/60 sticky top-0 z-30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                        <i class="fa-solid fa-chart-pie text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                            SubmissionPulse <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium">Live Analytics</span>
+                        </h1>
+                        <p class="text-xs text-slate-400">50 Records Analyzed • Oct 4, 2026 Session</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <!-- AI Detection Badge -->
+                    <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>AI-Generated Dataset (Confidence: 99.8%)</span>
+                    </div>
+                    
+                    <!-- Export Button -->
+                    <button onclick="exportData()" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg shadow-md transition-all flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Export Report</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+            <!-- KPI Cards Grid -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                
+                <!-- Card 1 -->
+                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 shadow-xl hover:border-indigo-500/50 transition-all group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Submissions</p>
+                            <h3 class="text-3xl font-extrabold text-white mt-1 group-hover:text-indigo-400 transition-colors">50</h3>
+                        </div>
+                        <div class="h-12 w-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                            <i class="fa-solid fa-users text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs text-emerald-400 gap-1">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                        <span>100% Unique Participants</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 shadow-xl hover:border-violet-500/50 transition-all group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Time Duration</p>
+                            <h3 class="text-xl font-bold text-white mt-1 group-hover:text-violet-400 transition-colors">1h 56m</h3>
+                        </div>
+                        <div class="h-12 w-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
+                            <i class="fa-solid fa-clock text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs text-slate-400">
+                        <span>09:01 AM – 10:57 AM</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 shadow-xl hover:border-sky-500/50 transition-all group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Positive Feedback</p>
+                            <h3 class="text-3xl font-extrabold text-white mt-1 group-hover:text-sky-400 transition-colors">86%</h3>
+                        </div>
+                        <div class="h-12 w-12 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+                            <i class="fa-solid fa-face-smile text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs text-sky-400 gap-1">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>High Engagement Level</span>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 shadow-xl hover:border-amber-500/50 transition-all group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Data Type</p>
+                            <h3 class="text-2xl font-bold text-amber-400 mt-1">Synthetic</h3>
+                        </div>
+                        <div class="h-12 w-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                            <i class="fa-solid fa-microchip text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs text-slate-400">
+                        <span>Sequential Email Patterns</span>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Category Distribution Doughnut Chart -->
+                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-base font-semibold text-white">Message Categories</h2>
+                            <span class="text-xs bg-slate-700/80 text-slate-300 px-2.5 py-1 rounded-full font-medium">Distribution</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Breakdown of submission types across all participants.</p>
+                    </div>
+                    <div class="relative w-full h-64 flex items-center justify-center">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-slate-300">
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-indigo-500"></span> Attendance (36%)</div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> Performance (36%)</div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-violet-500"></span> Milestones (28%)</div>
+                    </div>
+                </div>
+
+                <!-- Time-Series Progression Chart -->
+                <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 shadow-xl lg:col-span-2 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-base font-semibold text-white">Submission Timeline Flow</h2>
+                            <span class="text-xs bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 px-2.5 py-1 rounded-full font-medium">Paced Interval</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Chronological progression of submissions over the 1h 56m time window (~142s gap).</p>
+                    </div>
+                    <div class="relative w-full h-64">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="bg-gradient-to-r from-indigo-950/40 via-slate-800/60 to-slate-800/60 border border-indigo-500/30 rounded-2xl p-6 shadow-xl">
+                <div class="flex items-start gap-4">
+                    <div class="h-12 w-12 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 shrink-0 mt-1">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h2 class="text-base font-bold text-white flex items-center gap-2">
+                            Dataset Intelligence & Synthetic Analysis
+                            <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-normal">AI-Verified</span>
+                        </h2>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Analysis reveals this dataset was <strong>AI-generated</strong>. Key signatures include strict sequential email indexing (<code class="text-indigo-400 font-mono">01</code> to <code class="text-indigo-400 font-mono">50</code>), perfectly uniform timestamp intervals (~2m 22s cadence), and cyclical message structures. Overall engagement remains exceptionally structured with 86% positive feedback.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-slate-800/60 border border-slate-700/60 rounded-2xl shadow-xl overflow-hidden">
+                <div class="p-6 border-b border-slate-700/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-white">Participant Submission Records</h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Explore individual logs, timestamps, and status tags.</p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                        <!-- Search Bar -->
+                        <div class="relative w-full sm:w-72">
+                            <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                            <input type="text" id="searchInput" oninput="filterTable()" placeholder="Search by name or email..." class="w-full bg-slate-900/80 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all">
+                        </div>
+
+                        <!-- Status Filter Dropdown -->
+                        <select id="statusFilter" onchange="filterTable()" class="w-full sm:w-48 bg-slate-900/80 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition-all cursor-pointer">
+                            <option value="all">All Messages</option>
+                            <option value="Present today">Present today</option>
+                            <option value="Assignment submitted">Assignment submitted</option>
+                            <option value="Good performance">Good performance</option>
+                            <option value="Project completed">Project completed</option>
+                            <option value="Excellent work">Excellent work</option>
+                            <option value="Good attendance">Good attendance</option>
+                            <option value="Needs improvement">Needs improvement</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900/60 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-700/60">
+                                <th class="py-3.5 px-6 font-semibold">#ID</th>
+                                <th class="py-3.5 px-6 font-semibold">Timestamp</th>
+                                <th class="py-3.5 px-6 font-semibold">Participant Name</th>
+                                <th class="py-3.5 px-6 font-semibold">Email Address</th>
+                                <th class="py-3.5 px-6 font-semibold">Status / Message</th>
+                                <th class="py-3.5 px-6 font-semibold text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="divide-y divide-slate-700/40 text-sm">
+                            <!-- Populated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Table Footer / Pagination Info -->
+                <div class="px-6 py-4 bg-slate-900/40 border-t border-slate-700/60 flex items-center justify-between text-xs text-slate-400">
+                    <span id="recordCountText">Showing 50 of 50 records</span>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Live Filter Active</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-slate-800 mt-12 py-6 text-center text-xs text-slate-500">
+            <p>SubmissionPulse Dashboard • Built with Tailwind CSS & Chart.js • Synthetic Analytics Engine</p>
+        </footer>
+
+    </div>
+
+    <div id="detailModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-md p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="flex items-center space-x-4 mb-6">
+                <div id="modalAvatar" class="h-14 w-14 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xl font-bold shadow-lg">
+                    AG
+                </div>
+                <div>
+                    <h3 id="modalName" class="text-lg font-bold text-white">AYON GHOSH</h3>
+                    <p id="modalEmail" class="text-xs text-slate-400">ayon.ghosh01@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Record ID:</span>
+                    <span id="modalId" class="text-white font-medium">#1</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Timestamp:</span>
+                    <span id="modalTimestamp" class="text-white font-medium">10/4/2026 9:01:12 AM</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Submission Note:</span>
+                    <span id="modalMessage" class="text-indigo-400 font-semibold">Present today</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Synthetic Index:</span>
+                    <span class="text-amber-400 font-medium">Verified Sequential (01)</span>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg shadow transition-all">
+                    Close Details
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Raw Dataset (50 records)
+        const rawData = [
+            { id: 1, time: "10/4/2026 9:01:12 AM", name: "AYON GHOSH", email: "ayon.ghosh01@gmail.com", message: "Present today" },
+            { id: 2, time: "10/4/2026 9:03:25 AM", name: "RAHUL DAS", email: "rahul.das02@gmail.com", message: "Good performance" },
+            { id: 3, time: "10/4/2026 9:05:41 AM", name: "PRIYA GHOSH", email: "priya.ghosh03@gmail.com", message: "Assignment submitted" },
+            { id: 4, time: "10/4/2026 9:07:18 AM", name: "ROHIT SEN", email: "rohit.sen04@gmail.com", message: "Present today" },
+            { id: 5, time: "10/4/2026 9:09:33 AM", name: "SNEHA ROY", email: "sneha.roy05@gmail.com", message: "Very good work" },
+            { id: 6, time: "10/4/2026 9:11:50 AM", name: "ARJUN MONDAL", email: "arjun.mondal06@gmail.com", message: "Project completed" },
+            { id: 7, time: "10/4/2026 9:14:07 AM", name: "PUJA DAS", email: "puja.das07@gmail.com", message: "Present today" },
+            { id: 8, time: "10/4/2026 9:16:22 AM", name: "AMIT GHOSH", email: "amit.ghosh08@gmail.com", message: "Needs improvement" },
+            { id: 9, time: "10/4/2026 9:18:45 AM", name: "RINA PAUL", email: "rina.paul09@gmail.com", message: "Assignment submitted" },
+            { id: 10, time: "10/4/2026 9:21:03 AM", name: "SUMAN ROY", email: "suman.roy10@gmail.com", message: "Excellent work" },
+            { id: 11, time: "10/4/2026 9:23:19 AM", name: "ANKITA DAS", email: "ankita.das11@gmail.com", message: "Present today" },
+            { id: 12, time: "10/4/2026 9:25:36 AM", name: "SOURAV GHOSH", email: "sourav.ghosh12@gmail.com", message: "Good attendance" },
+            { id: 13, time: "10/4/2026 9:27:51 AM", name: "MOUMITA SEN", email: "moumita.sen13@gmail.com", message: "Project completed" },
+            { id: 14, time: "10/4/2026 9:30:14 AM", name: "ABHISHEK ROY", email: "abhishek.roy14@gmail.com", message: "Present today" },
+            { id: 15, time: "10/4/2026 9:32:40 AM", name: "TANIA DAS", email: "tania.das15@gmail.com", message: "Assignment submitted" },
+            { id: 16, time: "10/4/2026 9:35:02 AM", name: "DEBASHIS PAUL", email: "debashis.paul16@gmail.com", message: "Good performance" },
+            { id: 17, time: "10/4/2026 9:37:28 AM", name: "RIYA GHOSH", email: "riya.ghosh17@gmail.com", message: "Excellent work" },
+            { id: 18, time: "10/4/2026 9:39:55 AM", name: "SUMIT SEN", email: "sumit.sen18@gmail.com", message: "Present today" },
+            { id: 19, time: "10/4/2026 9:42:11 AM", name: "PRIYANKA ROY", email: "priyanka.roy19@gmail.com", message: "Keep improving" },
+            { id: 20, time: "10/4/2026 9:44:37 AM", name: "RAJ DAS", email: "raj.das20@gmail.com", message: "Project completed" },
+            { id: 21, time: "10/4/2026 9:47:05 AM", name: "POOJA GHOSH", email: "pooja.ghosh21@gmail.com", message: "Good performance" },
+            { id: 22, time: "10/4/2026 9:49:29 AM", name: "ANIKET PAUL", email: "aniket.paul22@gmail.com", message: "Present today" },
+            { id: 23, time: "10/4/2026 9:51:46 AM", name: "SUSMITA DAS", email: "susmita.das23@gmail.com", message: "Assignment submitted" },
+            { id: 24, time: "10/4/2026 9:54:13 AM", name: "SAIKAT ROY", email: "saikat.roy24@gmail.com", message: "Excellent work" },
+            { id: 25, time: "10/4/2026 9:56:38 AM", name: "REENA SEN", email: "reena.sen25@gmail.com", message: "Good attendance" },
+            { id: 26, time: "10/4/2026 9:59:04 AM", name: "BIKASH GHOSH", email: "bikash.ghosh26@gmail.com", message: "Present today" },
+            { id: 27, time: "10/4/2026 10:01:27 AM", name: "DIYA DAS", email: "diya.das27@gmail.com", message: "Project completed" },
+            { id: 28, time: "10/4/2026 10:03:52 AM", name: "AKASH ROY", email: "akash.roy28@gmail.com", message: "Good performance" },
+            { id: 29, time: "10/4/2026 10:06:18 AM", name: "SHREYA PAUL", email: "shreya.paul29@gmail.com", message: "Assignment submitted" },
+            { id: 30, time: "10/4/2026 10:08:43 AM", name: "RAHUL GHOSH", email: "rahul.ghosh30@gmail.com", message: "Present today" },
+            { id: 31, time: "10/4/2026 10:11:09 AM", name: "ANJALI SEN", email: "anjali.sen31@gmail.com", message: "Excellent work" },
+            { id: 32, time: "10/4/2026 10:13:35 AM", name: "SUBHAM DAS", email: "subham.das32@gmail.com", message: "Needs improvement" },
+            { id: 33, time: "10/4/2026 10:15:58 AM", name: "RIYA PAUL", email: "riya.paul33@gmail.com", message: "Good attendance" },
+            { id: 34, time: "10/4/2026 10:18:24 AM", name: "DEBASIS ROY", email: "debasis.roy34@gmail.com", message: "Project completed" },
+            { id: 35, time: "10/4/2026 10:20:49 AM", name: "MEGHNA GHOSH", email: "meghna.ghosh35@gmail.com", message: "Present today" },
+            { id: 36, time: "10/4/2026 10:23:15 AM", name: "SAURAV DAS", email: "saurav.das36@gmail.com", message: "Assignment submitted" },
+            { id: 37, time: "10/4/2026 10:25:40 AM", name: "PRIYAM ROY", email: "priyam.roy37@gmail.com", message: "Good performance" },
+            { id: 38, time: "10/4/2026 10:28:06 AM", name: "RIYA SEN", email: "riya.sen38@gmail.com", message: "Excellent work" },
+            { id: 39, time: "10/4/2026 10:30:32 AM", name: "ABHINAV GHOSH", email: "abhinav.ghosh39@gmail.com", message: "Present today" },
+            { id: 40, time: "10/4/2026 10:32:57 AM", name: "MONIKA DAS", email: "monika.das40@gmail.com", message: "Good attendance" },
+            { id: 41, time: "10/4/2026 10:35:23 AM", name: "ARINDAM ROY", email: "arindam.roy41@gmail.com", message: "Project completed" },
+            { id: 42, time: "10/4/2026 10:37:48 AM", name: "SWATI PAUL", email: "swati.paul42@gmail.com", message: "Assignment submitted" },
+            { id: 43, time: "10/4/2026 10:40:14 AM", name: "ROHAN SEN", email: "rohan.sen43@gmail.com", message: "Present today" },
+            { id: 44, time: "10/4/2026 10:42:39 AM", name: "MOHIT DAS", email: "mohit.das44@gmail.com", message: "Needs improvement" },
+            { id: 45, time: "10/4/2026 10:45:05 AM", name: "ISHITA GHOSH", email: "ishita.ghosh45@gmail.com", message: "Excellent work" },
+            { id: 46, time: "10/4/2026 10:47:31 AM", name: "KUNAL ROY", email: "kunal.roy46@gmail.com", message: "Good performance" },
+            { id: 47, time: "10/4/2026 10:49:56 AM", name: "NEHA DAS", email: "neha.das47@gmail.com", message: "Present today" },
+            { id: 48, time: "10/4/2026 10:52:22 AM", name: "RAJAT PAUL", email: "rajat.paul48@gmail.com", message: "Assignment submitted" },
+            { id: 49, time: "10/4/2026 10:54:47 AM", name: "DIKSHA SEN", email: "diksha.sen49@gmail.com", message: "Good attendance" },
+            { id: 50, time: "10/4/2026 10:57:13 AM", name: "ABHISHEK GHOSH", email: "abhishek.ghosh50@gmail.com", message: "Keep up the good work" }
+        ];
+
+        // Initialize Table
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500">No matching records found.</td></tr>`;
+                document.getElementById('recordCountText').innerText = `Showing 0 of 50 records`;
+                return;
+            }
+
+            data.forEach(item => {
+                let badgeColor = 'bg-slate-700 text-slate-300 border-slate-600';
+                if (item.message.includes('Present') || item.message.includes('attendance')) {
+                    badgeColor = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30';
+                } else if (item.message.includes('submitted') || item.message.includes('completed')) {
+                    badgeColor = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+                } else if (item.message.includes('performance') || item.message.includes('work') || item.message.includes('Excellent')) {
+                    badgeColor = 'bg-violet-500/10 text-violet-400 border-violet-500/30';
+                } else if (item.message.includes('improvement')) {
+                    badgeColor = 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+                }
+
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-800/40 transition-colors cursor-pointer';
+                row.onclick = () => openModal(item);
+                row.innerHTML = `
+                    <td class="py-3.5 px-6 font-mono text-xs text-slate-400">#${item.id}</td>
+                    <td class="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap">${item.time}</td>
+                    <td class="py-3.5 px-6 font-semibold text-white">${item.name}</td>
+                    <td class="py-3.5 px-6 text-slate-400 font-mono text-xs">${item.email}</td>
+                    <td class="py-3.5 px-6">
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${badgeColor}">
+                            ${item.message}
+                        </span>
+                    </td>
+                    <td class="py-3.5 px-6 text-right">
+                        <button class="text-slate-400 hover:text-indigo-400 transition-colors p-1">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('recordCountText').innerText = `Showing ${data.length} of 50 records`;
+        }
+
+        // Search & Filter Logic
+        function filterTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value;
+
+            const filtered = rawData.filter(item => {
+                const matchesQuery = item.name.toLowerCase().includes(query) || item.email.toLowerCase().includes(query);
+                const matchesStatus = status === 'all' || item.message === status;
+                return matchesQuery && matchesStatus;
+            });
+
+            renderTable(filtered);
+        }
+
+        // Modal Controls
+        function openModal(item) {
+            document.getElementById('modalId').innerText = '#' + item.id;
+            document.getElementById('modalName').innerText = item.name;
+            document.getElementById('modalEmail').innerText = item.email;
+            document.getElementById('modalTimestamp').innerText = item.time;
+            document.getElementById('modalMessage').innerText = item.message;
+            
+            // Generate Initials Avatar
+            const initials = item.name.split(' ').map(n => n[0]).join('');
+            document.getElementById('modalAvatar').innerText = initials;
+
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                document.getElementById('modalContent').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('opacity-0');
+            document.getElementById('modalContent').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Export data simulation
+        function exportData() {
+            let csv = 'ID,Timestamp,Name,Email,Message\n';
+            rawData.forEach(r => {
+                csv += `"${r.id}","${r.time}","${r.name}","${r.email}","${r.message}"\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'submission_analytics_report.csv');
+            a.click();
+        }
+
+        // Render Charts on Load
+        window.onload = function() {
+            renderTable(rawData);
+
+            // Category Doughnut Chart
+            const ctxCategory = document.getElementById('categoryChart').getContext('2d');
+            new Chart(ctxCategory, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Attendance', 'Performance & Feedback', 'Milestone Submissions'],
+                    datasets: [{
+                        data: [18, 18, 14],
+                        backgroundColor: ['#6366f1', '#10b981', '#8b5cf6'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    cutout: '75%'
+                }
+            });
+
+            // Timeline Progression Line Chart
+            const ctxTimeline = document.getElementById('timelineChart').getContext('2d');
+            const timelineLabels = rawData.map(r => `#${r.id}`);
+            const timelineData = rawData.map((_, i) => (i + 1));
+
+            new Chart(ctxTimeline, {
+                type: 'line',
+                data: {
+                    labels: timelineLabels,
+                    datasets: [{
+                        label: 'Cumulative Submissions',
+                        data: timelineData,
+                        borderColor: '#6366f1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 2,
+                        pointBackgroundColor: '#6366f1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
+                            ticks: { color: '#94a3b8', maxTicksLimit: 10 }
+                        },
+                        y: {
+                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+
+</body>
+</html>
